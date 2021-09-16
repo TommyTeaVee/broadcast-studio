@@ -1,0 +1,20 @@
+@use 'base';
+
+%standard-button-inactive {
+    background-color: #E3E3E3;
+    border: none;
+    outline: none;
+    color: black;
+    font-weight: 800;
+    font-family: base.$font-stack;
+}
+
+%standard-button-active {
+    background-color: #595959;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: bold;
+    font-weight: base.$font-stack;
+}
+

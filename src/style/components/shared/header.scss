@@ -1,0 +1,8 @@
+@use '/assets/style/base';
+
+#header {
+    width: 100%;
+    height: 8%;
+    background-color: base.$color-light-gray;
+    border-bottom: 2px solid black;
+}
