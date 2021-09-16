@@ -14,12 +14,18 @@ class PresenterModeButton extends React.Component {
         )
     }
 }
+class SplashPageButton extends React.Component {
+    render() {
+        return (
+            <button className='presenter-mode-button-inactive'>Splash Page</button>
+        )
+    }
+}
 class PresenterControls extends React.Component {
     render() {
         return (
             <div id='presenter-controls'>
-                {/* <button onClick={()=> this.props.sendSwitcherCommand(this.props.switcher.setInputSelection(1))}>Local Presenter</button> */}
-                {/* <button onClick={()=> this.props.sendSwitcherCommand(this.props.switcher.setInputSelection(2))}>Remote Presenter</button> */}
+                <SplashPageButton/>
                 <PresenterModeButton
                     // states
                     label='Local Presenter'

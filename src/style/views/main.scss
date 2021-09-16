@@ -32,7 +32,7 @@
     border-right: 5px solid base.$color-dark-gray;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 #macro-list {
@@ -60,7 +60,6 @@
 .macro-button-active {
     @extend %standard-button-active
 }
-
 .presenter-mode-button-inactive, .presenter-mode-button-active {
     width: 20%;
     height: 65%;
@@ -70,4 +69,12 @@
 }
 .presenter-mode-button-active {
     @extend %standard-button-active;
+}
+#preview-window {
+    background-color: black;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

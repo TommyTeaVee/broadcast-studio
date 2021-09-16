@@ -1,0 +1,10 @@
+@use 'base';
+
+%header-button-inactive {
+    background-color: base.$color-dark-gray;
+    border: 0.2px solid base.$color-light-gray;
+    outline: none;
+    color: white;
+    font-family: base.$font-stack;
+    font-weight: 800;
+}
