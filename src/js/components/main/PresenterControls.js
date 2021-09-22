@@ -1,6 +1,6 @@
-import { ResolverFactory } from 'enhanced-resolve'
 import React from 'react'
-
+import { querySession,getMacroList } from '../../../../api/NewTekTricasterApi'
+ 
 class PresenterModeButton extends React.Component {
     render() {
         return (
