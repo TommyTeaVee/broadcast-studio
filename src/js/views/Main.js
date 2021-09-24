@@ -30,8 +30,11 @@ class Main extends React.Component {
                         // states
                         switcher={this.props.switcher}
                         switcherStatus={this.props.switcherStatus}
+                        displays={this.props.displays}
+                        displayStatus={this.props.displayStatus}
                         // methods
                         sendSwitcherCommand={this.props.sendSwitcherCommand}
+                        sendDisplayCommand={this.props.sendDisplayCommand}
                     />
                     <MacroList
                         // states

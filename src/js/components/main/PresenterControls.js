@@ -44,6 +44,19 @@ class PresenterControls extends React.Component {
                     // methods
                     sendSwitcherCommand={this.props.sendSwitcherCommand}
                 />
+                
+                {this.props.displayStatus.map((displayStatus,index) => (
+                    <React.Fragment>
+                        {displayStatus.power === 'power on' ?
+                            <button key={index} onClick={()=> this.props.sendDisplayCommand(index,this.props.displays[index].setPower('power off'))}>{`Display ${index + 1} Power On`}</button>
+                        :
+                            <button key={index} onClick={()=> this.props.sendDisplayCommand(index,this.props.displays[index].setPower('power on'))}>{`Display ${index + 1} Power Off`}</button>
+                        }
+                    </React.Fragment> 
+                ))}
+
+
+
             </div>
         )
     }

@@ -4,7 +4,7 @@ export default class ExtronSwHd4kPlusSeries {
         this.lastCommand = null
         this.delimiter = '\r'
         this.status = {
-            input: 0,
+            input: 1,
             videoMute: 0,
             audioMute: 0,
             autoSwitchMode: 0,
@@ -71,6 +71,7 @@ export default class ExtronSwHd4kPlusSeries {
     }
     /* PARSING *************************************************************************/
     parseResponse = (data) => {
+        console.log('last command = ',this.lastCommand)
         if(data.search('\r\n') > -1) {
             let response = data.substring(0,data.length -2)
             if(response.search('In') > -1) {
@@ -94,6 +95,8 @@ export default class ExtronSwHd4kPlusSeries {
                         this.status.inputs[inputIndex - 1].hdcpStatus = Number(response.substring(0,1))
                     } else if(this.lastCommand.search('O') > -1) {
                         this.status.outputHdcp = Number(response.substring(0,1))
+                    } else if(this.lastCommand === '!') {
+                        this.status.input = Number(response.substring(0,1))
                     }
                 }
             }

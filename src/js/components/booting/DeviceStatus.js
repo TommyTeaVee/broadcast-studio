@@ -1,3 +1,4 @@
+import { ResolverFactory } from 'enhanced-resolve'
 import React from 'react'
 
 
@@ -15,11 +16,20 @@ class DeviceStatus extends React.Component {
     render() {
         return (
             <div id='device-status'>
-                    <h3>{this.props.switcherClientStatus} to Extron SW-HD-4k-Plus @ {this.props.switcherAddress}</h3>
-                    <h1>Display 1 Status: {this.props.displayClientStatus[0]}</h1>
-                    <h1>Display 2 Status: {this.props.displayClientStatus[1]}</h1>
-                    <h1>Display 3 Status: {this.props.displayClientStatus[2]}</h1>
-                    <h1>Display 4 Status: {this.props.displayClientStatus[3]}</h1>
+                    {this.props.switcherClientStatus === '' ? 
+                        <React.Fragment/>
+                    :
+                        <h3>{this.props.switcherClientStatus} to Extron SW-HD-4k-Plus @ {this.props.switcherAddress}</h3>
+                    }
+                    {this.props.displayClientStatus.map((displayClientStatus,index) => (
+                        <React.Fragment>
+                            {displayClientStatus === '' ?
+                                <React.Fragment/>
+                            :
+                                <h3 key={index}>{`${displayClientStatus} to LG Display ${index + 1} @ ${this.props.displayAddresses[index]}`}</h3>
+                            }
+                        </React.Fragment>
+                    ))}
             </div>
         )
     }
