@@ -71,7 +71,6 @@ export default class ExtronSwHd4kPlusSeries {
     }
     /* PARSING *************************************************************************/
     parseResponse = (data) => {
-        console.log('last command = ',this.lastCommand)
         if(data.search('\r\n') > -1) {
             let response = data.substring(0,data.length -2)
             if(response.search('In') > -1) {

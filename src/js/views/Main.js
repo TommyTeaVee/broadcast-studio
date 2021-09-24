@@ -14,11 +14,17 @@ import {getMacroList} from '../../../api/NewTekTricasterApi'
 class Main extends React.Component {
     state = {
         macroFolders: [],
-        selectedMacro: null
+        selectedMacro: null,
+        selectedMacroFolder: null,
+        selectedMacroFolderName: null,
     }
     getTricasterMacros = () => {
         getMacroList('192.168.1.31')
         .then(macroFolders => this.setState({macroFolders}))
+    }
+    setSelectedMacroFolder = thisMacroFolder => {
+        this.setState({selectedMacroFolder: thisMacroFolder})
+        this.setState({selectedMacroFolderName: thisMacroFolder.name})
     }
     render() {
         return (
@@ -40,6 +46,10 @@ class Main extends React.Component {
                         // states
                         macroFolders={this.state.macroFolders}
                         selectedMacro={this.state.selectedMacro}
+                        selectedMacroFolder={this.state.selectedMacroFolder}
+                        selectedMacroFolderName={this.state.selectedMacroFolderName}
+                        // methods
+                        setSelectedMacroFolder={this.setSelectedMacroFolder}
                     />
                 </div>
                 <Footer/>

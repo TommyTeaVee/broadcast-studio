@@ -40,7 +40,6 @@ class App extends React.Component {
     createSwitcherClient = () => {
         switcherClient = net.connect({address: switcherAddress, port: 23}, ()=> {
             switcherClient.on('data', data => {
-                console.log('data = ',data.toString())
                 this.setState({switcherStatus: switcher.parseResponse(data.toString())})
             })
             if(switcherClient.localAddress === undefined) {
@@ -144,7 +143,6 @@ class App extends React.Component {
         setTimeout(()=> {this.setState({systemBooting: false})},10000)
     }
     render() {
-        console.log('switcherStatus = ',this.state.switcherStatus)
         return (
             <div id='app'>
                 {this.state.systemBooting === true ?

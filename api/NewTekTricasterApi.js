@@ -71,6 +71,7 @@ export let getMacroList = address => {
                         id = id.slice(0,id.search('"')).replace('"','')
                     }
                     folderMacros.push(new Macro(name,id))
+
                 }
                 macroFolders.push(new MacroFolder(folderName,folderMacros))
             }
