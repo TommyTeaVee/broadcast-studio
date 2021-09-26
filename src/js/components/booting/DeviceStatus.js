@@ -1,12 +1,20 @@
-import { ResolverFactory } from 'enhanced-resolve'
 import React from 'react'
 
+import Loader from '../../components/shared/Loader'
 
 class DeviceConnection extends React.Component {
     render() {
         return (
             <div className='device-connection'> 
-                
+                <h3>{`${this.props.clientStatus} to ${this.props.clientName} (${this.props.clientAddress})`}</h3>
+                {this.props.clientStatus === 'Connecting' ? 
+                    <Loader
+                        width='25px'
+                        height='25px'
+                    />
+                :
+                    <h1 className='device-connection-checkbox'>&#10003;</h1>
+                }
             </div>
         )
     }
@@ -19,14 +27,26 @@ class DeviceStatus extends React.Component {
                     {this.props.switcherClientStatus === '' ? 
                         <React.Fragment/>
                     :
-                        <h3>{this.props.switcherClientStatus} to Extron SW-HD-4k-Plus @ {this.props.switcherAddress}</h3>
+                        <DeviceConnection
+                            // states
+                            clientStatus={this.props.switcherClientStatus}
+                            clientName='Extron SW-HD 4K Plus'
+                            clientAddress={this.props.switcherAddress}
+                        />
                     }
                     {this.props.displayClientStatus.map((displayClientStatus,index) => (
                         <React.Fragment>
                             {displayClientStatus === '' ?
                                 <React.Fragment/>
                             :
-                                <h3 key={index}>{`${displayClientStatus} to LG Display ${index + 1} @ ${this.props.displayAddresses[index]}`}</h3>
+                                <DeviceConnection
+                                    // states
+                                    key={index}
+                                    clientStatus={displayClientStatus}
+                                    clientName={`LG Display ${index + 1}`}
+                                    clientAddress={this.props.displayAddresses[index]}
+
+                                />
                             }
                         </React.Fragment>
                     ))}

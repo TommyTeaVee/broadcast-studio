@@ -54,19 +54,29 @@ class App extends React.Component {
         setInterval(() => {
             if(switcherClient.localAddress === undefined) {
                 this.createSwitcherClient()
+            } else {
+                this.sendSwitcherCommand(switcher.viewInputSelection())
             }
-            this.sendSwitcherCommand(switcher.viewInputSelection())
         },5000)
     }
     sendSwitcherCommand = command => {
         switcherClient.write(command)
     }
     /* DISPLAY CONTROL ******************************************************************************/
+    displayQueryCycle = index => {
+        setInterval(()=> {
+            if(displayClient[index].localAddress === undefined) {
+                this.createDisplayClient(index,displayAddresses[index],displayPorts[index])
+            } else {
+                this.sendDisplayCommand(displays[index].viewPower())
+            }
+        })
+    }
     handleDisplayStatus = (index,data) => {
         let displayStatus = this.state.displayStatus
         displayStatus[index] = displays[index].parseResponse(data) 
         this.setState({displayStatus})
-    }
+    }    
     createDisplayClient = (index,address,port) => {
         displayClients[index] = net.connect({address: address, port: port}, ()=> {
             let displayStatus = this.state.displayStatus
@@ -84,6 +94,7 @@ class App extends React.Component {
                 displayClientStatus[index] = 'Not Connected'
             } else {
                 displayClientStatus[index] = 'Connected'
+                this.displayQueryCycle(index)
             }
             this.setState({displayClientStatus})
         })
@@ -102,45 +113,45 @@ class App extends React.Component {
         this.setState({systemBooting: true})
 
         setTimeout(()=> this.setState({switcherClientStatus: 'Connecting'}))
-        setTimeout(()=> this.setState({switcherClientStatus: this.createSwitcherClient()}),1000)
+        setTimeout(()=> this.setState({switcherClientStatus: this.createSwitcherClient()}),500)
 
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[0] = 'Connecting'
-            this.setState({displayClientStatus})},2000)
+            this.setState({displayClientStatus})},1000)
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[0] = this.createDisplayClient(0,displayAddresses[0],displayPorts[0])
-            this.setState({displayClientStatus})},3000)
+            this.setState({displayClientStatus})},1500)
 
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[1] = 'Connecting'
-            this.setState({displayClientStatus})},4000)
+            this.setState({displayClientStatus})},2000)
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[1] = this.createDisplayClient(1,displayAddresses[1],displayPorts[1])
-            this.setState({displayClientStatus})},5000)
+            this.setState({displayClientStatus})},2500)
 
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[2] = 'Connecting'
-            this.setState({displayClientStatus})},6000)
+            this.setState({displayClientStatus})},3000)
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[2] = this.createDisplayClient(2,displayAddresses[2],displayPorts[2])
-            this.setState({displayClientStatus})},7000)
+            this.setState({displayClientStatus})},3500)
 
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[3] = 'Connecting'
-            this.setState({displayClientStatus})},8000)
+            this.setState({displayClientStatus})},4000)
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[3] = this.createDisplayClient(3,displayAddresses[3],displayPorts[3])
-            this.setState({displayClientStatus})},9000)
+            this.setState({displayClientStatus})},4500)
 
-        setTimeout(()=> {this.setState({systemBooting: false})},10000)
+        setTimeout(()=> {this.setState({systemBooting: true})},5000)
     }
     render() {
         return (

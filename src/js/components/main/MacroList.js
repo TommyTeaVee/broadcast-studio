@@ -4,7 +4,7 @@ class MacroButtonHeader extends React.Component {
     render() {
         return (
             <div className='macro-list-header'>
-                <h3>{this.props.selectedMacroFolder.name}</h3>
+                <h3>{this.props.selectedMacroFolderName}</h3>
                 {this.props.showReturn ?
                     <button>Return</button>
                 :
@@ -71,7 +71,10 @@ class MacroList extends React.Component {
                         </React.Fragment>
                     :
                         <React.Fragment>
-                            {/* <MacroButtonHeader/> */}
+                            <MacroButtonHeader
+                                // states
+                                selectedMacroFolderName={this.props.selectedMacroFolderName}
+                            />
                             {this.props.selectedMacroFolder.macros.map((macro,index) => (
                                 <MacroButton
                                     key={index}

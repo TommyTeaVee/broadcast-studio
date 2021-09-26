@@ -34,6 +34,9 @@ export default class LgBasic {
             }
         }
     }
+    viewPower = () => {
+        return this.returnCommand(`ka ${this.id} FF\r`)
+    }
     /* INPUT ********************************************************************/
     setInputSelection = selectedInput => {
         for(const input of this.states.inputs) {

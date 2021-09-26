@@ -1,0 +1,13 @@
+@use '/assets/style/base';
+
+.loader {
+    border: 8px solid  base.$color-light-gray; /* Light grey */
+    border-top: 8px solid base.$color-dark-gray; /* Blue */
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

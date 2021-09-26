@@ -12,8 +12,8 @@ class HeaderButton extends React.Component {
 class Header extends React.Component {
     render() {
         return (
-            <div id='header'>
-                <div id='header-button-list'>
+            <div className='header'>
+                <div className='header-button-list'>
                 <HeaderButton
                     // states
                     label='Help'

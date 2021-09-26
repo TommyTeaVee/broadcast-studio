@@ -1,5 +1,7 @@
 import React from 'react'
 import { querySession,getMacroList } from '../../../../api/NewTekTricasterApi'
+
+import Loader from '../shared/Loader'
  
 class PresenterModeButton extends React.Component {
     render() {
@@ -45,7 +47,7 @@ class PresenterControls extends React.Component {
                     sendSwitcherCommand={this.props.sendSwitcherCommand}
                 />
                 
-                {this.props.displayStatus.map((displayStatus,index) => (
+                {/* {this.props.displayStatus.map((displayStatus,index) => (
                     <React.Fragment>
                         {displayStatus.power === 'power on' ?
                             <button key={index} onClick={()=> this.props.sendDisplayCommand(index,this.props.displays[index].setPower('power off'))}>{`Display ${index + 1} Power On`}</button>
@@ -53,10 +55,7 @@ class PresenterControls extends React.Component {
                             <button key={index} onClick={()=> this.props.sendDisplayCommand(index,this.props.displays[index].setPower('power on'))}>{`Display ${index + 1} Power Off`}</button>
                         }
                     </React.Fragment> 
-                ))}
-
-
-
+                ))} */}
             </div>
         )
     }

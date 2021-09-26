@@ -2,13 +2,11 @@ import React from 'react'
 
 import '../../../style/components/shared/footer.scss'
 
-class Footer extends React.Component {
+class BootingFooter extends React.Component {
     render() {
         return (
-            <div className='footer'>
-
-            </div>
+            <div className='footer'/>
         )
     }
 }
-export default Footer
+export default BootingFooter
