@@ -4,28 +4,42 @@ import Booting from './views/Booting'
 
 import ExtronSwHd4kPlusSeries from '../../control/ExtronSwHdPlusSeries'
 import LgBasicControl from '../../control/LgBasicControl'
+import ViscaOverIp from '../../control/ViscaOverIp'
 
 import { querySession } from '../../api/NewTekTricasterApi'
 
 const net = require('net')
+const dgram = require('dgram')
 
 import '../style/App.scss'
 
 /* SWITCHER CONTROL **********************************************************************************/
-let switcher = new ExtronSwHd4kPlusSeries(2)
-let switcherClient = {}
-let switcherAddress = '127.0.0.1'
+var switcher = new ExtronSwHd4kPlusSeries(2)
+var switcherClient = {}
+const switcherAddress = '127.0.0.1'
 
 /* DISPLAY CONTROL ***********************************************************************************/
-let displays = [
+var displays = [
     new LgBasicControl('01'),
     new LgBasicControl('01'),
     new LgBasicControl('01'),
     new LgBasicControl('01')
 ]
-let displayClients = []
-let displayAddresses = ['127.0.0.1','127.0.0.1','127.0.0.1','127.0.0.1']
-let displayPorts = [52001,52002,52003,52004]
+var displayClients = []
+const displayAddresses = ['127.0.0.1','127.0.0.1','127.0.0.1','127.0.0.1']
+const displayPorts = [52001,52002,52003,52004]
+
+/* TRICASTER CONTROL *********************************************************************************/
+const tricasterAddress = '192.168.1.31'
+
+/* CAMERA CONTROL ************************************************************************************/
+var cameras = [
+    new ViscaOverIp(1,8,8,2),
+    new ViscaOverIp(1,8,8,2)
+]
+var cameraClients = []
+const cameraAddresses = ['127.0.0.1','127.0.0.1']
+const cameraPorts = [53001,53002]
 
 class App extends React.Component {
     state = {
@@ -35,6 +49,7 @@ class App extends React.Component {
         displayClientStatus: ['','','',''],
         systemBooting: false,
         systemBootSuccessful: false,
+        tricasterCommStatus: ''
     }
     /* SWITCHER CONTROL *****************************************************************************/
     createSwitcherClient = () => {
@@ -65,12 +80,12 @@ class App extends React.Component {
     /* DISPLAY CONTROL ******************************************************************************/
     displayQueryCycle = index => {
         setInterval(()=> {
-            if(displayClient[index].localAddress === undefined) {
+            if(displayClients[index].localAddress === undefined) {
                 this.createDisplayClient(index,displayAddresses[index],displayPorts[index])
             } else {
-                this.sendDisplayCommand(displays[index].viewPower())
+                this.sendDisplayCommand(index,displays[index].viewPower())
             }
-        })
+        },5000)
     }
     handleDisplayStatus = (index,data) => {
         let displayStatus = this.state.displayStatus
@@ -90,6 +105,7 @@ class App extends React.Component {
                 this.setState({displayStatus})
             })
             let displayClientStatus = this.state.displayClientStatus
+
             if(displayClients[index].localAddress === undefined) {
                 displayClientStatus[index] = 'Not Connected'
             } else {
@@ -102,56 +118,82 @@ class App extends React.Component {
     sendDisplayCommand = (index,command) => {
         displayClients[index].write(command)
     }
-
-
     /* CAMERA CONTROL *******************************************************************************/
-
+    createCameraClient = () => {
+        cameraClients.push(dgram.createSocket('udp4')) 
+    }
+    sendCameraCommand = (index,command) => {
+        console.log(`camera ${index} command ~ ${command}`)
+        cameraClients[index].send(command, 0, command.length, cameraPorts[index], cameraAddresses[index], function(err, bytes) {
+            if(err) throw err
+        })
+    }
     /* TRICASTER CONTROL ****************************************************************************/
+    initializeTricasterSession = () => {
+        querySession(tricasterAddress)
+        .then(resText => {
+            if(resText.search('TRUE') > -1) {
+                this.setState({tricasterCommStatus: 'Connected'})
+            } else {
+                this.setState({tricasterCommStatus: 'Not Connected'})
+            }
+        })
+    }
+    /* MAGEWELL CONTROL *****************************************************************************/
 
     /* INITIALIZE ***********************************************************************************/
     initialize = () => {
-        this.setState({systemBooting: true})
+        let displaysConnectedCount = 0
+
+        this.setState({systemBooting: false})
 
         setTimeout(()=> this.setState({switcherClientStatus: 'Connecting'}))
-        setTimeout(()=> this.setState({switcherClientStatus: this.createSwitcherClient()}),500)
+        setTimeout(()=> {this.createSwitcherClient()},500)
 
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[0] = 'Connecting'
             this.setState({displayClientStatus})},1000)
-        setTimeout(()=> {
-            let displayClientStatus = this.state.displayClientStatus
-            displayClientStatus[0] = this.createDisplayClient(0,displayAddresses[0],displayPorts[0])
-            this.setState({displayClientStatus})},1500)
+        setTimeout(()=> {this.createDisplayClient(0,displayAddresses[0],displayPorts[0])},1500)
 
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[1] = 'Connecting'
             this.setState({displayClientStatus})},2000)
-        setTimeout(()=> {
-            let displayClientStatus = this.state.displayClientStatus
-            displayClientStatus[1] = this.createDisplayClient(1,displayAddresses[1],displayPorts[1])
-            this.setState({displayClientStatus})},2500)
+        setTimeout(()=> {this.createDisplayClient(1,displayAddresses[1],displayPorts[1])},2500)
 
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[2] = 'Connecting'
             this.setState({displayClientStatus})},3000)
-        setTimeout(()=> {
-            let displayClientStatus = this.state.displayClientStatus
-            displayClientStatus[2] = this.createDisplayClient(2,displayAddresses[2],displayPorts[2])
-            this.setState({displayClientStatus})},3500)
+        setTimeout(()=> {this.createDisplayClient(2,displayAddresses[2],displayPorts[2])},3500)
 
         setTimeout(()=> {
             let displayClientStatus = this.state.displayClientStatus
             displayClientStatus[3] = 'Connecting'
             this.setState({displayClientStatus})},4000)
-        setTimeout(()=> {
-            let displayClientStatus = this.state.displayClientStatus
-            displayClientStatus[3] = this.createDisplayClient(3,displayAddresses[3],displayPorts[3])
-            this.setState({displayClientStatus})},4500)
+        setTimeout(()=> {this.createDisplayClient(3,displayAddresses[3],displayPorts[3])},4500)
 
-        setTimeout(()=> {this.setState({systemBooting: true})},5000)
+        setTimeout(()=> this.setState({tricasterCommStatus: 'Connecting'}),5000)
+        setTimeout(()=> this.initializeTricasterSession(),5500)
+
+
+        setTimeout(()=> this.createCameraClient(0),6000)
+        setTimeout(()=> this.createCameraClient(1),6500)
+
+        setTimeout(()=> {
+            for(let displayClientStatus of this.state.displayClientStatus) {
+                if(displayClientStatus === 'Connected') {
+                    displaysConnectedCount += 1
+                }
+            }
+        },7000)
+
+        setTimeout(()=> {
+            if(this.state.switcherClientStatus === 'Connected' && displaysConnectedCount === 4 && this.state.tricasterCommStatus === 'Connected') {
+                this.setState({systemBooting: false})
+            }
+        },7500)
     }
     render() {
         return (
@@ -163,6 +205,8 @@ class App extends React.Component {
                         switcherAddress={switcherAddress}
                         displayClientStatus={this.state.displayClientStatus}
                         displayAddresses={displayAddresses}
+                        tricasterCommStatus={this.state.tricasterCommStatus}
+                        tricasterAddress={tricasterAddress}
                     />
                 :
                     <Main
@@ -171,9 +215,11 @@ class App extends React.Component {
                         switcherStatus={this.state.switcherStatus}
                         displays={displays}
                         displayStatus={this.state.displayStatus}
+                        cameras={cameras}
                         // methods
                         sendSwitcherCommand={this.sendSwitcherCommand}
                         sendDisplayCommand={this.sendDisplayCommand}
+                        sendCameraCommand={this.sendCameraCommand}
                     />
                 }
             </div>

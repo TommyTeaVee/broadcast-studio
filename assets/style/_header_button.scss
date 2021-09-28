@@ -1,10 +1,28 @@
 @use 'base';
 
-%header-button-inactive {
+%header-button-container-inactive {
+    border: 0.2px solid base.$color-light-gray;
+    background-color: base.$color-light-gray;
+}
+%header-button-container-active {
+    border: 0.2px solid base.$color-dark-gray;
     background-color: base.$color-dark-gray;
+}
+
+%header-button-inactive {
+    background-color: transparent;
     border: 0.2px solid base.$color-light-gray;
     outline: none;
-    color: white;
     font-family: base.$font-stack;
-    font-weight: 800;
+    color: black;
 }
+%header-button-active {
+    background-color: base.$color-dark-gray;
+    border: 0.2px solid base.$color-dark-gray;
+    outline: none;
+    font-family: base.$font-stack;
+    color: white;
+}
+
+
+

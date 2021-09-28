@@ -28,6 +28,8 @@ class Booting extends React.Component {
                         switcherAddress={this.props.switcherAddress}
                         displayClientStatus={this.props.displayClientStatus}
                         displayAddresses={this.props.displayAddresses}
+                        tricasterCommStatus={this.props.tricasterCommStatus}
+                        tricasterAddress={this.props.tricasterAddress}
                     />
                 </div>
                 <BootingFooter/>

@@ -13,7 +13,13 @@ class DeviceConnection extends React.Component {
                         height='25px'
                     />
                 :
-                    <h1 className='device-connection-checkbox'>&#10003;</h1>
+                    <React.Fragment>
+                        {this.props.clientStatus === 'Connected' ?
+                            <h1 className='device-connection-success'>&#10004;</h1>
+                        :
+                            <h1 className='device-connection-failed'>&#10005;</h1>
+                        }                           
+                    </React.Fragment>
                 }
             </div>
         )
@@ -45,11 +51,20 @@ class DeviceStatus extends React.Component {
                                     clientStatus={displayClientStatus}
                                     clientName={`LG Display ${index + 1}`}
                                     clientAddress={this.props.displayAddresses[index]}
-
                                 />
                             }
                         </React.Fragment>
                     ))}
+                    {this.props.tricasterCommStatus === '' ?
+                        <React.Fragment/>
+                    :
+                        <DeviceConnection
+                            // states
+                            clientStatus={this.props.tricasterCommStatus}
+                            clientName='Tricaster'
+                            clientAddress={this.props.tricasterAddress}
+                        />
+                    }
             </div>
         )
     }

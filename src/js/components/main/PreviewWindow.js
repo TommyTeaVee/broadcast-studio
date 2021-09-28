@@ -13,7 +13,9 @@ class PreviewWindow extends React.Component {
     render() {
         return (
             <div id='preview-window'>
-                Preview Window
+                <video width="560" controls>
+                    <source src="" type="video/mp4"/>
+                </video>
             </div>  
         )
     }

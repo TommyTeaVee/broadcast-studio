@@ -19,10 +19,47 @@
     justify-content: center;
     align-items: center;
 }
-.header-button-inactive {
-    width: 60px;
-    height: 60px;
-    margin-right: 8%;
-    border-radius: 100%;
+
+/* HEADER BUTTON INACTIVE ****************************************************************************/
+.header-button-container-inactive, .header-button-container-active {
+    width: 40%;
+    height: 90%;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @extend %header-button-container-inactive;
+}
+.header-button-inactive, .header-button-active {
+    width: 60%;
+    height: 65%;
+    font-size: 18px;
     @extend %header-button-inactive;
 }   
+.header-button-arrow-inactive {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid black;
+}
+
+/* HEADER BUTTON ACTIVE ******************************************************************************/
+.header-button-container-active {
+    @extend %header-button-container-active;
+}
+.header-button-active {
+    @extend %header-button-active;
+}
+.header-button-arrow-active {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+}
+
+
+
+
