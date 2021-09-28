@@ -145,7 +145,7 @@ class App extends React.Component {
     initialize = () => {
         let displaysConnectedCount = 0
 
-        this.setState({systemBooting: false})
+        this.setState({systemBooting: true})
 
         setTimeout(()=> this.setState({switcherClientStatus: 'Connecting'}))
         setTimeout(()=> {this.createSwitcherClient()},500)
@@ -216,6 +216,7 @@ class App extends React.Component {
                         displays={displays}
                         displayStatus={this.state.displayStatus}
                         cameras={cameras}
+                        tricasterAddress={tricasterAddress}
                         // methods
                         sendSwitcherCommand={this.sendSwitcherCommand}
                         sendDisplayCommand={this.sendDisplayCommand}

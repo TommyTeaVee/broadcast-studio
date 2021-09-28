@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {getImage} from '../../../../api/NewTekTricasterApi'
+
 class PreviewWindowButton extends React.Component {
     render() {
         return (
@@ -10,12 +12,20 @@ class PreviewWindowButton extends React.Component {
     }
 }
 class PreviewWindow extends React.Component {
+    state = {
+        imageURL: ''
+    }
+    getPreviewImage = () => {
+        getImage(this.props.tricasterAddress,'output1',640,480,100)
+        .then(image => {
+            this.setState({imageURL: URL.createObjectURL(image)})
+        })
+    }
     render() {
         return (
             <div id='preview-window'>
-                <video width="560" controls>
-                    <source src="" type="video/mp4"/>
-                </video>
+                <button onClick={this.getPreviewImage}>Get Preview Image</button>
+                <img src={this.state.imageURL}/>
             </div>  
         )
     }

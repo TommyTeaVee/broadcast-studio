@@ -1,7 +1,7 @@
 @use 'base';
 
 %standard-button-inactive {
-    background-color: #E3E3E3;
+    background-color: base.$color-medium-gray;
     border: none;
     outline: none;
     color: black;
@@ -10,7 +10,16 @@
 }
 
 %standard-button-active {
-    background-color: #595959;
+    background-color: base.$color-blue;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: bold;
+    font-weight: base.$font-stack;
+}
+
+%standard-button-active-red {
+    background-color: base.$color-orange-red;
     border: none;
     outline: none;
     color: white;

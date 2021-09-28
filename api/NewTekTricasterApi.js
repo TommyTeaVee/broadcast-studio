@@ -2,16 +2,24 @@ export let triggerMacro = (address,name) => {
     return (
         fetch(`http://${address}/v1/trigger?name=${name}`)
         .then(res => {
-            console.log('res = ',res)
+            if(!res.ok) {
+                throw Error(res.statusText)
+            }
+            return res.text()
         })
+        .catch(err => console.log('err = ',err))
     )
 }
-export let shortcut = (address,name) => {
+export let shortcut = (address,name,value) => {
     return (
-        fetch(`http://${address}/v1/shortcut?name=${name}`)
+        fetch(`http://${address}/v1/shortcut?name=${name}&value=${value}`)
         .then(res => {
-            console.log('res = ',res)
+            if(!res.ok) {
+                throw Error(res.statusText)
+            }
+            return res.text()
         })
+        .catch(err => console.log('err = ',err))
     )
 }
 export let querySession = address => {
@@ -23,7 +31,19 @@ export let querySession = address => {
             }
             return res.text()
         })
-        .catch(err => console.log('err => ',err))
+        .catch(err => console.log('err = ',err))
+    )
+}
+export let getImage = (address,name,xres,yres,q) => {
+    return (
+        fetch(`http://${address}/v1/image?name=${name}&xres=${xres}&yres=${yres}&q=${q}`)
+        .then(res => {
+            if(!res.ok) {
+                throw Error(res.statusText)
+            }
+            return res.blob()
+        }) 
+        .catch(err => console.log('err = ',err))
     )
 }
 export let getMacroList = address => {

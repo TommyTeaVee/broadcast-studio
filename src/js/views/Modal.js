@@ -37,6 +37,7 @@ class Modal extends React.Component {
                     // methods
                     setMainState={this.props.setMainState}
                 />
+
                 {this.props.modal === null ?
                     <React.Fragment/>
                 :

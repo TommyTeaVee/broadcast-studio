@@ -10,6 +10,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    z-index: 2;
 }
 #displays-header {
     width: 100%;
@@ -49,12 +50,15 @@
     justify-content: space-between;
     align-items: flex-start;
 }
-.display-power-button-inactive, .display-power-button-active {
+.display-power-button-inactive, .display-power-button-active-on, .display-power-button-active-off {
     width: 48%;
     height: 55%;
     border-radius: 5px;
     @extend %standard-button-inactive;
 }
-.display-power-button-active {
+.display-power-button-active-on {
     @extend %standard-button-active;
+}
+.display-power-button-active-off {
+    @extend %standard-button-active-red;
 }

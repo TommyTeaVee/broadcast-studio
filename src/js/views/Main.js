@@ -17,6 +17,7 @@ class Main extends React.Component {
         modal: null,
         macroFolders: [],
         selectedMacro: null,
+        selectedMacroName: '',
         selectedMacroFolder: null,
         selectedMacroFolderName: null,
     }
@@ -24,8 +25,8 @@ class Main extends React.Component {
         this.setState({[key]: value})
     }
     getTricasterMacros = () => {
-        getMacroList('192.168.1.31')
-        .then(macroFolders => this.setState({macroFolders}))
+        getMacroList(this.props.tricasterAddress)
+        .then(macroFolders => {this.setState({macroFolders})})
     }
     setSelectedMacroFolder = thisMacroFolder => {
         this.setState({selectedMacroFolder: thisMacroFolder})
@@ -41,7 +42,10 @@ class Main extends React.Component {
                     setMainState={this.setMainState}
                 />
                 <div id='main-view-controls'>
-                    <PreviewWindow/>
+                    <PreviewWindow
+                        // states
+                        tricasterAddress={this.props.tricasterAddress}
+                    />
                     <PresenterControls
                         // states
                         switcher={this.props.switcher}
@@ -56,10 +60,13 @@ class Main extends React.Component {
                         // states
                         macroFolders={this.state.macroFolders}
                         selectedMacro={this.state.selectedMacro}
+                        selectedMacroName={this.state.selectedMacroName}
                         selectedMacroFolder={this.state.selectedMacroFolder}
                         selectedMacroFolderName={this.state.selectedMacroFolderName}
+                        tricasterAddress={this.props.tricasterAddress}
                         // methods
                         setSelectedMacroFolder={this.setSelectedMacroFolder}
+                        setMainState={this.setMainState}
                     />
                 </div>
                 <Footer/>
