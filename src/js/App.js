@@ -147,7 +147,7 @@ class App extends React.Component {
     initialize = () => {
         let displaysConnectedCount = 0
 
-        this.setState({systemBooting: true})
+        this.setState({systemBooting: false})
 
         setTimeout(()=> this.setState({switcherClientStatus: 'Connecting'}))
         setTimeout(()=> {this.createSwitcherClient()},500)
