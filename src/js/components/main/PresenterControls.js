@@ -27,7 +27,6 @@ class PresenterControls extends React.Component {
     render() {
         return (
             <div id='presenter-controls'>
-                <SplashPageButton/>
                 <PresenterModeButton
                     // states
                     label='Local Presenter'

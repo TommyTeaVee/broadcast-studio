@@ -27,7 +27,7 @@ var displays = [
 ]
 var displayClients = []
 const displayAddresses = ['127.0.0.1','127.0.0.1','127.0.0.1','127.0.0.1']
-const displayPorts = [52001,52002,52003,52004]
+const displayPorts = [54001,54002,54003,54004]
 
 /* TRICASTER CONTROL *********************************************************************************/
 const tricasterAddress = '192.168.1.31'
@@ -140,6 +140,8 @@ class App extends React.Component {
         })
     }
     /* MAGEWELL CONTROL *****************************************************************************/
+
+    
 
     /* INITIALIZE ***********************************************************************************/
     initialize = () => {

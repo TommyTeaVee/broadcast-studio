@@ -28,22 +28,54 @@ class PreviewWindow extends React.Component {
         var url = `ws://${this.props.tricasterAddress}/v1/video_notifications?name=output1&xres=640&yres=480&q=100`
         var ws = new WebSocket(url)
         ws.onmessage = (message) => {
+            console.log('message = ',message)
+            ws.alive = true
+            console.log('ws.alive = ',ws.alive)
             new Response(message.data)
                 .arrayBuffer()
                 .then(buffer => {
                     const parser = new DatauriParser()
                     let image = parser.format('jpeg',buffer)
-                    console.log('image = ',image)
+                    //console.log('image = ',image)
                     this.setState({imageURL: image.content})
-
                 })
         }
     }
+
+    setClientKeepAlive = (ws) => {
+
+        const endTimeout = () => {
+            console.log('Terminating websocket on heartbeat timeout')
+            ws.terminate()
+        }
+
+        ws.on('open', () => {
+            ws.pingTimeout = setTimeout(endTimeout, config.websocket.pingInterval)
+        })
+
+        ws.on('ping', () => {
+            clearTimeout(ws.pingTimeout)
+            ws.pingTimeout = setTimeout(endTimeout, config.websocket.pingInterval)
+        })
+
+        ws.on('close', () => {
+            clearTimeout(ws.pingTimeout)
+        })
+
+    }
+
+
     render() {
         return (
             <div id='preview-window'>
-                <button onClick={()=> {this.startPreviewStream()}}>Get Preview Image</button>
-                <img src={this.state.imageURL}/>
+
+
+                <img id='preview-window-image' src={this.state.imageURL}/>
+
+                
+                <div id='preview-window-transport'>
+                    <button onClick={()=> {this.startPreviewStream()}}>Get Preview Image</button>
+                </div>
             </div>  
         )
     }
