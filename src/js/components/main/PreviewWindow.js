@@ -105,6 +105,12 @@ class PreviewWindow extends React.Component {
                             }
                         </React.Fragment>
                     }
+                    <button id='preview-window-fullscreen'>
+                        <div id='top-left' className='full-screen-corner'/>
+                        <div id='top-right' className='full-screen-corner'/>
+                        <div id='bottom-left' className='full-screen-corner'/>
+                        <div id='bottom-right' className='full-screen-corner'/>
+                    </button>
                 </div>
             </div>  
         )
