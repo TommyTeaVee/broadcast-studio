@@ -96,8 +96,12 @@ class App extends React.Component {
     displayQueryCycle = index => {
         setInterval(()=> {
             if(displayClients[index].localAddress === undefined) {
+                this.addSystemAlert({header: `LG Display #${index + 1}`, body: 'Lost Communication'})
                 this.createDisplayClient(index,displayAddresses[index],displayPorts[index])
             } else {
+                if(this.state.system.alerts.length > 0) {
+                    this.removeSystemAlert({header: `LG Display #${index + 1}`, body: 'Lost Communication'})
+                }
                 this.sendDisplayCommand(index,displays[index].viewPower())
             }
         },5000)
