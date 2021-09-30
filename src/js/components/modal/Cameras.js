@@ -5,7 +5,13 @@ import '../../../style/components/modal/cameras.scss'
 class CameraPreset extends React.Component {
     render() {
         return (
-            <button className='camera-preset'>{this.props.preset}</button>
+            <React.Fragment>
+                {this.props.preset.label === this.props.selectedCameraPreset[this.props.cameraIndex] ? 
+                    <button className='camera-preset-active'>{this.props.preset.label}</button>
+                :
+                    <button className='camera-preset-inactive'>{this.props.preset.label}</button>
+                }
+            </React.Fragment>
         )
     }
 }
@@ -13,7 +19,23 @@ class Cameras extends React.Component {
     state = {
         cameraIndex: 0,
         cameraLabels: ['Front', 'Rear'],
-        cameraPresets: ['Preset 1', 'Preset 2', 'Preset 3', 'Preset 4', 'Preset 5']
+        cameraPresets: [
+            [     
+                {label: 'Preset 1', value: 1}, 
+                {label: 'Preset 2', value: 2}, 
+                {label: 'Preset 3', value: 3}, 
+                {label: 'Preset 4', value: 4}, 
+                {label: 'Preset 5', value: 5}
+            ],
+            [     
+                {label: 'Preset 1', value: 1}, 
+                {label: 'Preset 2', value: 2}, 
+                {label: 'Preset 3', value: 3}, 
+                {label: 'Preset 4', value: 4}, 
+                {label: 'Preset 5', value: 5}
+            ],
+        ],
+        selectedCameraPreset: ['Preset 1','Preset 3']
     }
     render() {
         return (
@@ -86,12 +108,14 @@ class Cameras extends React.Component {
                         </div>
                     </div>
                     <div id='camera-control-presets'>
-                        {this.state.cameraPresets.map((preset,index) => (
+                        {this.state.cameraPresets[this.state.cameraIndex].map((preset,index) => (
                             <CameraPreset
                                 // states
                                 key={index}
                                 index={index}
                                 preset={preset}
+                                cameraIndex={this.state.cameraIndex}
+                                selectedCameraPreset={this.state.selectedCameraPreset}
                             />
                         ))}
                     </div>
