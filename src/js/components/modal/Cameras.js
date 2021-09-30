@@ -6,10 +6,10 @@ class CameraPreset extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {this.props.preset.label === this.props.selectedCameraPreset[this.props.cameraIndex] ? 
-                    <button className='camera-preset-active'>{this.props.preset.label}</button>
+                {this.props.preset.name === this.props.cameraCurrentPresets[this.props.cameraIndex].name ? 
+                    <button className='camera-preset-active' onClick={()=> {this.props.handleCameraPreset(this.props.cameraIndex,this.props.preset,'recall')}}>{this.props.preset.name}</button>
                 :
-                    <button className='camera-preset-inactive'>{this.props.preset.label}</button>
+                    <button className='camera-preset-inactive' onClick={()=> this.props.handleCameraPreset(this.props.cameraIndex,this.props.preset,'recall')}>{this.props.preset.name}</button>
                 }
             </React.Fragment>
         )
@@ -21,21 +21,35 @@ class Cameras extends React.Component {
         cameraLabels: ['Front', 'Rear'],
         cameraPresets: [
             [     
-                {label: 'Preset 1', value: 1}, 
-                {label: 'Preset 2', value: 2}, 
-                {label: 'Preset 3', value: 3}, 
-                {label: 'Preset 4', value: 4}, 
-                {label: 'Preset 5', value: 5}
+                {name: 'Preset 1', value: 1}, 
+                {name: 'Preset 2', value: 2}, 
+                {name: 'Preset 3', value: 3}, 
+                {name: 'Preset 4', value: 4}, 
+                {name: 'Preset 5', value: 5}
             ],
             [     
-                {label: 'Preset 1', value: 1}, 
-                {label: 'Preset 2', value: 2}, 
-                {label: 'Preset 3', value: 3}, 
-                {label: 'Preset 4', value: 4}, 
-                {label: 'Preset 5', value: 5}
+                {name: 'Preset 1', value: 1}, 
+                {name: 'Preset 2', value: 2}, 
+                {name: 'Preset 3', value: 3}, 
+                {name: 'Preset 4', value: 4}, 
+                {name: 'Preset 5', value: 5}
             ],
         ],
-        selectedCameraPreset: ['Preset 1','Preset 3']
+        cameraCurrentPresets: [{name: ''},{name: ''}]
+    }
+    clearCameraPreset = cameraIndex => {
+        let cameraCurrentPresets = this.state.cameraCurrentPresets
+        cameraCurrentPresets[cameraIndex] = ''
+        this.setState({cameraCurrentPresets})
+    }
+    handleCameraPreset = (cameraIndex,preset,action) => {
+        let cameraCurrentPresets = this.state.cameraCurrentPresets
+        cameraCurrentPresets[cameraIndex] = preset
+        this.setState({cameraCurrentPresets})
+        this.props.sendCameraCommand(cameraIndex,this.props.cameras[cameraIndex].setPreset(action,preset.value))
+    }
+    cameraPtz = (cameraIndex,control) => {
+
     }
     render() {
         return (
@@ -115,7 +129,10 @@ class Cameras extends React.Component {
                                 index={index}
                                 preset={preset}
                                 cameraIndex={this.state.cameraIndex}
-                                selectedCameraPreset={this.state.selectedCameraPreset}
+                                cameraCurrentPresets={this.state.cameraCurrentPresets}
+                                // methods
+                                handleCameraPreset={this.handleCameraPreset}
+                                
                             />
                         ))}
                     </div>
