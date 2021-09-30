@@ -34,10 +34,15 @@ class System extends React.Component {
                     ))}
                 </div>
                 <div id='system-alert-container'>
-                    {this.props.system.activeAlert ? 
+                    {this.props.system.alerts.length > 0 ? 
                         <div id='system-alert'>
-                            <h3>System Alert</h3>
-                            <p>View alert</p>
+                            <h4 id='system-alert-title'>System Alert</h4>
+                            <ul id='system-alert-list'>
+                                {this.props.system.alerts.map((alert,index) => (
+                                    <li key={index}>{`${alert.header}: ${alert.body}`}</li>
+                                ))} 
+                            </ul>
+
                         </div>
                     :
                         <React.Fragment/>

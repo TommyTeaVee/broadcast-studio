@@ -12,6 +12,7 @@ const net = require('net')
 const dgram = require('dgram')
 
 import '../style/App.scss'
+import { toLinuxArchString } from 'builder-util'
 
 /* SWITCHER CONTROL **********************************************************************************/
 var switcher = new ExtronSwHd4kPlusSeries(2)
@@ -50,7 +51,8 @@ class App extends React.Component {
                 {label: 'Teams Room', value: 'teams'},
                 {label: 'Signage', value: 'signage'}
             ],
-            activeAlert: false
+            activeAlert: false,
+            alerts: []
         },
         switcherStatus: {},
         switcherClientStatus: '',
@@ -77,10 +79,12 @@ class App extends React.Component {
     switcherQueryCycle = () => {
         setInterval(() => {
             if(switcherClient.localAddress === undefined) {
-                this.setSystemAlert(true)
+                this.addSystemAlert({header: 'Extron SW2-HD', body: 'Lost Communication'})
                 this.createSwitcherClient()
             } else {
-                this.setSystemAlert(false)
+                if(this.state.system.alerts.length > 0) {
+                    this.removeSystemAlert({header: 'Extron SW2-HD', body: 'Lost Communication'})
+                }
                 this.sendSwitcherCommand(switcher.viewInputSelection())
             }
         },5000)
@@ -157,6 +161,29 @@ class App extends React.Component {
     setSystemAlert = status => {
         let system = this.state.system
         system.activeAlert = status
+        this.setState({system})
+    }
+    addSystemAlert = thisAlert => {
+        let system = this.state.system
+        let allowAdd = true
+        system.alerts.map(alert => {
+            if(alert.header === thisAlert.header) {
+                allowAdd = false
+            }
+        })
+        if(allowAdd === true) {
+            system.alerts.push(thisAlert)
+        }
+        this.setState({system})
+    }
+    removeSystemAlert = thisAlert => {
+        console.log(`remove ${thisAlert.header} alert`)
+        let system = this.state.system
+        system.alerts.map((alert,index) => {
+            if(alert.header === thisAlert.header) {
+                system.alerts.splice(index,1)
+            }
+        })
         this.setState({system})
     }
     /* INITIALIZE ***********************************************************************************/
