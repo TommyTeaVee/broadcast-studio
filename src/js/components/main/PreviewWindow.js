@@ -6,34 +6,27 @@ const WebSocket = require('ws')
 const DatauriParser = require('datauri/parser')
 
 var ws
+var heartbeat
 
-class PreviewWindowButton extends React.Component {
-    render() {
-        return (
-            <React.Fragment>
-
-            </React.Fragment>
-        )
-    }
-}
 class PreviewWindow extends React.Component {
     state = {
         imageURL: '',
         previewStatus: 'stop'
     }
-    getPreviewImage = () => {
-        getImage(this.props.tricasterAddress,'output1',1280,720,100)
-        .then(image => {
-            this.setState({imageURL: URL.createObjectURL(image)})
-        })
+    handleHeartbeat = state => {
+        if(state === true) {
+            heartbeat = setInterval(() => {
+                ws.send('heartbeat')
+                console.log('Thud!')
+            },5000)
+        } else {
+            clearInterval(heartbeat)
+        }
     }
     startPreviewStream = () => {
         var url = `ws://${this.props.tricasterAddress}/v1/video_notifications?name=output1&xres=640&yres=480&q=100`
         ws = new WebSocket(url)
         ws.onmessage = (message) => {
-            console.log('message = ',message)
-            ws.alive = true
-            console.log('ws.alive = ',ws.alive)
             new Response(message.data)
                 .arrayBuffer()
                 .then(buffer => {
@@ -42,21 +35,15 @@ class PreviewWindow extends React.Component {
                     this.setState({imageURL: image.content})
                 })
         }
-        
-        // need a way to keep the websocket open during previewing
-
         this.setState({previewStatus: 'play'})
+        this.handleHeartbeat(true)
     }
-
-    
-
-
-
     stopPreviewStream = () => {
         ws.close()
         setTimeout(() => {
             this.setState({imageURL: ''})
             this.setState({previewStatus: 'stop'})
+            this.handleHeartbeat(false)
         },500)
 
     }

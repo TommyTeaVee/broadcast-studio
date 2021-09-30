@@ -58,7 +58,7 @@ class App extends React.Component {
         switcherClientStatus: '',
         displayStatus: [{},{},{},{}],
         displayClientStatus: ['','','',''],
-        systemBooting: false,
+        systemBooting: true,
         systemBootSuccessful: false,
         tricasterCommStatus: ''
     }
