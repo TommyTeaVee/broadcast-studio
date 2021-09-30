@@ -33,20 +33,27 @@ class Header extends React.Component {
         return (
             <div className='header'>
                 <div className='header-button-list'>
-                <HeaderButton
-                    // states
-                    label='Displays'
-                    modal={this.props.modal}
-                    // methods
-                    setMainState={this.props.setMainState}
-                />
-                <HeaderButton
-                    // states
-                    label='Cameras'
-                    modal={this.props.modal}
-                    // methods
-                    setMainState={this.props.setMainState}
-                />
+                    <HeaderButton
+                        // states
+                        label='Displays'
+                        modal={this.props.modal}
+                        // methods
+                        setMainState={this.props.setMainState}
+                    />
+                    <HeaderButton
+                        // states
+                        label='Cameras'
+                        modal={this.props.modal}
+                        // methods
+                        setMainState={this.props.setMainState}
+                    />
+                    <HeaderButton
+                        // states
+                        label='System'
+                        modal={this.props.modal}
+                        // methods
+                        setmainState={this.props.setMainState}
+                    />
                 </div>
             </div>
         )

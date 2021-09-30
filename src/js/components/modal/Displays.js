@@ -38,7 +38,6 @@ class Displays extends React.Component {
         labels: ['Left Display','Center Left Display','Center Right Display','Right Display']
     }
     render() {
-        console.log('displayStatus = ',this.props.displayStatus)
         return (
             <div id='displays'>
                 <div id='displays-header'>Display Controls</div>

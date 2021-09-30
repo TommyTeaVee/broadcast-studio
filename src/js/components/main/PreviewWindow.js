@@ -47,47 +47,70 @@ class PreviewWindow extends React.Component {
 
         this.setState({previewStatus: 'play'})
     }
+
+    
+
+
+
     stopPreviewStream = () => {
         ws.close()
         this.setState({imageURL: ''})
         this.setState({previewStatus: 'stop'})
     }
     pausePreviewStream = () => {
-        ws.close()
-        this.setState({previewStatus: 'pause'})
+        if(this.state.previewStatus === 'play') {
+            ws.close()
+            this.setState({previewStatus: 'pause'})
+        }
     }
-
-
-
 
     render() {
         return (
             <div id='preview-window'>
+                {this.state.imageURL.length > 0 ?
+                    <img className='preview-window-image' src={this.state.imageURL}/>
+                :
+                    <div className='preview-window-image'>
+                        <h1>Steelcase Broadcast Studio</h1>
+                        <p>Start video preview below</p>
+                    </div>
 
-
-                <img id='preview-window-image' src={this.state.imageURL}/>
-
-                
+                }
                 <div id='preview-window-transport'>
                     {this.state.previewStatus === 'play' ?
                         <React.Fragment>
-                            <button className='preview-window-transport-button-active' onClick={this.startPreviewStream}>Play</button>
-                            <button className='preview-window-transport-button-inactive' onClick={this.stopPreviewStream}>Stop</button>
-                            <button className='preview-window-transport-button-inactive' onClick={this.pausePreviewStream}>Pause</button>
+                            <button className='preview-window-transport-button-active' onClick={this.startPreviewStream}><div className='preview-window-transport-play-active'/></button>
+                            <button className='preview-window-transport-button-inactive' onClick={this.stopPreviewStream}><div className='preview-window-transport-stop-inactive'/></button>
+                            <button className='preview-window-transport-button-inactive' onClick={this.pausePreviewStream}>
+                                <div className='preview-window-transport-pause-container'>
+                                    <div className='preview-window-transport-pause-inactive'/>
+                                    <div className='preview-window-transport-pause-inactive'/>
+                                </div>
+                            </button>
                         </React.Fragment>
                     :
                         <React.Fragment>
                             {this.state.previewStatus === 'stop' ?
                                 <React.Fragment>
-                                    <button className='preview-window-transport-button-inactive' onClick={()=> {this.startPreviewStream()}}>Play</button>
-                                    <button className='preview-window-transport-button-active' onClick={this.stopPreviewStream}>Stop</button>
-                                    <button className='preview-window-transport-button-inactive' onClick={this.pausePreviewStream}>Pause</button>
+                                    <button className='preview-window-transport-button-inactive' onClick={()=> {this.startPreviewStream()}}><div className='preview-window-transport-play-inactive'/></button>
+                                    <button className='preview-window-transport-button-active' onClick={this.stopPreviewStream}><div className='preview-window-transport-stop-active'/></button>
+                                    <button className='preview-window-transport-button-inactive' onClick={this.pausePreviewStream}>
+                                        <div className='preview-window-transport-pause-container'>
+                                            <div className='preview-window-transport-pause-inactive'/>
+                                            <div className='preview-window-transport-pause-inactive'/>
+                                        </div>
+                                    </button>
                                 </React.Fragment>
                             :
                                 <React.Fragment>
-                                    <button className='preview-window-transport-button-inactive' onClick={()=> {this.startPreviewStream()}}>Play</button>
-                                    <button className='preview-window-transport-button-inactive' onClick={this.stopPreviewStream}>Stop</button>
-                                    <button className='preview-window-transport-button-active' onClick={this.pausePreviewStream}>Pause</button>
+                                    <button className='preview-window-transport-button-inactive' onClick={()=> {this.startPreviewStream()}}><div className='preview-window-transport-play-inactive'/></button>
+                                    <button className='preview-window-transport-button-inactive' onClick={this.stopPreviewStream}><div className='preview-window-transport-stop-inactive'/></button>
+                                    <button className='preview-window-transport-button-active' onClick={this.pausePreviewStream}>
+                                        <div className='preview-window-transport-pause-container'>
+                                            <div className='preview-window-transport-pause-active'/>
+                                            <div className='preview-window-transport-pause-active'/>
+                                        </div>
+                                    </button>
                                 </React.Fragment>
                             }
                         </React.Fragment>
