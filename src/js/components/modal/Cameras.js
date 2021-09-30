@@ -39,7 +39,7 @@ class Cameras extends React.Component {
     }
     clearCameraPreset = cameraIndex => {
         let cameraCurrentPresets = this.state.cameraCurrentPresets
-        cameraCurrentPresets[cameraIndex] = ''
+        cameraCurrentPresets[cameraIndex] = {name: ''}
         this.setState({cameraCurrentPresets})
     }
     handleCameraPreset = (cameraIndex,preset,action) => {
@@ -48,8 +48,13 @@ class Cameras extends React.Component {
         this.setState({cameraCurrentPresets})
         this.props.sendCameraCommand(cameraIndex,this.props.cameras[cameraIndex].setPreset(action,preset.value))
     }
-    cameraPtz = (cameraIndex,control) => {
-
+    cameraPanTilt = (cameraIndex,control) => {
+        this.props.sendCameraCommand(cameraIndex,this.props.cameras[cameraIndex].setPanTilt(control))
+        this.clearCameraPreset(cameraIndex)
+    }
+    cameraZoom = (cameraIndex,control) => {
+        this.props.sendCameraCommand(cameraIndex,this.props.cameras[cameraIndex].setZoom(control))
+        this.clearCameraPreset(cameraIndex)
     }
     render() {
         return (
@@ -72,8 +77,8 @@ class Cameras extends React.Component {
 
                         <div id='camera-control-ptz-top-row'>
                             <button id='camera-ptz-up' className='camera-arrow-button tilt'
-                                onMouseDown={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setPanTilt('up'))}
-                                onMouseUp={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setPanTilt('stop'))}>
+                                onMouseDown={()=> this.cameraPanTilt(this.state.cameraIndex,'up')}
+                                onMouseUp={()=> this.cameraPanTilt(this.state.cameraIndex,'stop')}>
                                 <div className='camera-arrow-up'/>
                                 <div className='camera-arrow-up' id='arrow-up-minus'/>
                             </button>
@@ -81,8 +86,8 @@ class Cameras extends React.Component {
 
                         <div id='camera-control-ptz-middle-row'>
                             <button id='camera-ptz-left' className='camera-arrow-button pan'
-                                onMouseDown={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setPanTilt('left'))}
-                                onMouseUp={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setPanTilt('stop'))}>
+                                onMouseDown={()=> this.cameraPanTilt(this.state.cameraIndex,'left')}
+                                onMouseUp={()=> this.cameraPanTilt(this.state.cameraIndex,'stop')}>
                                 <div className='camera-arrow-left'/>
                                 <div className='camera-arrow-left' id='arrow-left-minus'/>
                             </button>
@@ -90,22 +95,22 @@ class Cameras extends React.Component {
                             <div id='camera-control-ptz-zoom'>
 
                                 <button id='camera-ptz-zoom-in' className='camera-ptz-zoom-button'
-                                    onMouseDown={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setZoom('in'))}
-                                    onMouseUp={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setZoom('stop'))}>
+                                    onMouseDown={()=> this.cameraZoom(this.state.cameraIndex,'in')}
+                                    onMouseUp={()=> this.cameraZoom(this.state.cameraIndex,'stop')}>
                                     +
                                 </button>
 
                                 <button id='camera-ptz-zoom-out' className='camera-ptz-zoom-button'
-                                    onMouseDown={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setZoom('out'))}
-                                    onMouseUp={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setZoom('stop'))}>
+                                    onMouseDown={()=> this.cameraZoom(this.state.cameraIndex,'out')}
+                                    onMouseUp={()=> this.cameraZoom(this.state.cameraIndex,'stop')}>
                                     -
                                 </button>
 
                             </div>
 
                             <button id='camera-ptz-right' className='camera-arrow-button pan'
-                                onMouseDown={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setPanTilt('right'))}
-                                onMouseUp={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setPanTilt('stop'))}>
+                                onMouseDown={()=> this.cameraPanTilt(this.state.cameraIndex,'right')}
+                                onMouseUp={()=> this.cameraPanTilt(this.state.cameraIndex,'stop')}>
                                 <div className='camera-arrow-right'/>
                                 <div className='camera-arrow-right' id='arrow-right-minus'/>
                                     
@@ -114,8 +119,8 @@ class Cameras extends React.Component {
 
                         <div id='camera-control-ptz-bottom-row'>
                             <button id='camera-ptz-down' className='camera-arrow-button tilt'
-                                onMouseDown={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setPanTilt('down'))}
-                                onMouseUp={()=> this.props.sendCameraCommand(this.state.cameraIndex,this.props.cameras[this.state.cameraIndex].setPanTilt('stop'))}>
+                                onMouseDown={()=> this.cameraPanTilt(this.state.cameraIndex,'down')}
+                                onMouseUp={()=> this.cameraPanTilt(this.state.cameraIndex,'stop')}>
                                 <div className='camera-arrow-down'/>
                                 <div className='camera-arrow-down' id='arrow-down-minus'/>
                             </button>
