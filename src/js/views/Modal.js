@@ -3,6 +3,7 @@ import React from 'react'
 import Header from '../components/shared/Header'
 import Displays from '../components/modal/Displays'
 import Cameras from '../components/modal/Cameras'
+import System from '../components/modal/System'
 
 import '../../style/views/modal.scss'
 
@@ -24,6 +25,13 @@ class Modal extends React.Component {
                     cameras={this.props.cameras}
                     // methods
                     sendCameraCommand={this.props.sendCameraCommand}
+                />
+            )
+            case 'System': return (
+                <System
+                    // states
+                    system={this.props.system}
+                    // methods
                 />
             )
         }

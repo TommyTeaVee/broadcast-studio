@@ -73,6 +73,7 @@ class Main extends React.Component {
                 {this.state.modal !== null ?
                     <Modal
                         // states
+                        system={this.props.system}
                         modal={this.state.modal}
                         displays={this.props.displays}
                         displayStatus={this.props.displayStatus}

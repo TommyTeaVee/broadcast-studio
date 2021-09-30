@@ -22,7 +22,7 @@ class PreviewWindow extends React.Component {
         previewStatus: 'stop'
     }
     getPreviewImage = () => {
-        getImage(this.props.tricasterAddress,'output1',640,480,100)
+        getImage(this.props.tricasterAddress,'output1',1280,720,100)
         .then(image => {
             this.setState({imageURL: URL.createObjectURL(image)})
         })
@@ -54,8 +54,11 @@ class PreviewWindow extends React.Component {
 
     stopPreviewStream = () => {
         ws.close()
-        this.setState({imageURL: ''})
-        this.setState({previewStatus: 'stop'})
+        setTimeout(() => {
+            this.setState({imageURL: ''})
+            this.setState({previewStatus: 'stop'})
+        },500)
+
     }
     pausePreviewStream = () => {
         if(this.state.previewStatus === 'play') {

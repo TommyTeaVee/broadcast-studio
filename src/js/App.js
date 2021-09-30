@@ -43,6 +43,15 @@ const cameraPorts = [53001,53002]
 
 class App extends React.Component {
     state = {
+        system: {
+            systemSetting: 'studio',
+            settings: [
+                {label: 'Broadcast Studio', value: 'studio'},
+                {label: 'Teams Room', value: 'teams'},
+                {label: 'Signage', value: 'signage'}
+            ],
+            activeAlert: false
+        },
         switcherStatus: {},
         switcherClientStatus: '',
         displayStatus: [{},{},{},{}],
@@ -68,8 +77,10 @@ class App extends React.Component {
     switcherQueryCycle = () => {
         setInterval(() => {
             if(switcherClient.localAddress === undefined) {
+                this.setSystemAlert(true)
                 this.createSwitcherClient()
             } else {
+                this.setSystemAlert(false)
                 this.sendSwitcherCommand(switcher.viewInputSelection())
             }
         },5000)
@@ -142,12 +153,15 @@ class App extends React.Component {
     /* MAGEWELL CONTROL *****************************************************************************/
 
     
-
+    /* SYSTEM ***************************************************************************************/
+    setSystemAlert = status => {
+        let system = this.state.system
+        system.activeAlert = status
+        this.setState({system})
+    }
     /* INITIALIZE ***********************************************************************************/
     initialize = () => {
         let displaysConnectedCount = 0
-
-        this.setState({systemBooting: true})
 
         setTimeout(()=> this.setState({switcherClientStatus: 'Connecting'}))
         setTimeout(()=> {this.createSwitcherClient()},500)
@@ -213,6 +227,7 @@ class App extends React.Component {
                 :
                     <Main
                         // states
+                        system={this.state.system}
                         switcher={switcher}
                         switcherStatus={this.state.switcherStatus}
                         displays={displays}

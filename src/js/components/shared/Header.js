@@ -52,7 +52,7 @@ class Header extends React.Component {
                         label='System'
                         modal={this.props.modal}
                         // methods
-                        setmainState={this.props.setMainState}
+                        setMainState={this.props.setMainState}
                     />
                 </div>
             </div>
