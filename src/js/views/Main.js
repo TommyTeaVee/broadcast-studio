@@ -12,6 +12,8 @@ import '../../style/views/main.scss'
 
 import {getMacroList} from '../../../api/NewTekTricasterApi'
 
+var headerTimeout
+
 class Main extends React.Component {
     state = {
         modal: null,
@@ -32,6 +34,21 @@ class Main extends React.Component {
         this.setState({selectedMacroFolder: thisMacroFolder})
         this.setState({selectedMacroFolderName: thisMacroFolder.name})
     }
+    setHeaderTimeout = action => {
+        switch(action) {
+            case 'set': {
+                clearTimeout(headerTimeout)
+                headerTimeout = setTimeout(() => {
+                    this.setMainState('modal',null)
+                },10000)
+                break;
+            }
+            case 'clear': {
+                clearTimeout(headerTimeout)
+                break;
+            }
+        }
+    }
     render() {
         return (
             <div id='main-view'>
@@ -40,6 +57,7 @@ class Main extends React.Component {
                     modal={this.state.modal}
                     // methods
                     setMainState={this.setMainState}
+                    setHeaderTimeout={this.setHeaderTimeout}
                 />
                 <div id='main-view-controls'>
                     <PreviewWindow
@@ -82,6 +100,7 @@ class Main extends React.Component {
                         setMainState={this.setMainState}
                         sendDisplayCommand={this.props.sendDisplayCommand}
                         sendCameraCommand={this.props.sendCameraCommand}
+                        setHeaderTimeout={this.setHeaderTimeout}
                     />
                 :    
                     <React.Fragment/>

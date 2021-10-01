@@ -13,19 +13,12 @@ class DeviceConnection extends React.Component {
                         height='25px'
                     />
                 :
-                    <React.Fragment>
-                        {this.props.clientStatus === 'Connected' ?
-                            <h1 className='device-connection-success'>&#10004;</h1>
-                        :
-                            <h1 className='device-connection-failed'>&#10005;</h1>
-                        }                           
-                    </React.Fragment>
+                    <React.Fragment/>
                 }
             </div>
         )
     }
 }
-
 class DeviceStatus extends React.Component {
     render() {
         return (

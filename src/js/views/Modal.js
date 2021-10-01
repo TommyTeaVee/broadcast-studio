@@ -17,6 +17,7 @@ class Modal extends React.Component {
                     displayStatus={this.props.displayStatus}
                     // methods
                     sendDisplayCommand={this.props.sendDisplayCommand}
+                    setHeaderTimeout={this.props.setHeaderTimeout}
                 />
             )
             case 'Cameras': return (
@@ -25,6 +26,7 @@ class Modal extends React.Component {
                     cameras={this.props.cameras}
                     // methods
                     sendCameraCommand={this.props.sendCameraCommand}
+                    setHeaderTimeout={this.props.setHeaderTimeout}
                 />
             )
             case 'System': return (
@@ -32,6 +34,7 @@ class Modal extends React.Component {
                     // states
                     system={this.props.system}
                     // methods
+                    setHeaderTimeout={this.props.setHeaderTimeout}
                 />
             )
         }

@@ -3,6 +3,11 @@ import React from 'react'
 import '../../../style/components/modal/displays.scss'
 
 class Display extends React.Component {
+
+    handleDisplayPower = (displayIndex,command) => {
+        this.props.sendDisplayCommand(displayIndex,command)
+        this.props.setHeaderTimeout('set')
+    }
     render() {
         return (
             <div className='display'>
@@ -10,20 +15,20 @@ class Display extends React.Component {
                 <div className='display-controls'>
                     {this.props.displayStatus.power === 'power on' ?
                         <React.Fragment>
-                            <button className='display-power-button-active-on' onClick={()=> this.props.sendDisplayCommand(this.props.index,this.props.display.setPower('Power On'))}>Power On</button>
-                            <button className='display-power-button-inactive' onClick={()=> this.props.sendDisplayCommand(this.props.index,this.props.display.setPower('Power Off'))}>Power Off</button>
+                            <button className='display-power-button-active-on' onClick={()=> {this.handleDisplayPower(this.props.index,this.props.display.setPower('Power On'))}}>Power On</button>
+                            <button className='display-power-button-inactive' onClick={()=> this.handleDisplayPower(this.props.index,this.props.display.setPower('Power Off'))}>Power Off</button>
                         </React.Fragment>
                     :
                         <React.Fragment>
                             {this.props.displayStatus.power === 'power off' ?
                                 <React.Fragment>
-                                    <button className='display-power-button-inactive' onClick={()=> this.props.sendDisplayCommand(this.props.index,this.props.display.setPower('Power On'))}>Power On</button>
-                                    <button className='display-power-button-active-off' onClick={()=> this.props.sendDisplayCommand(this.props.index,this.props.display.setPower('Power Off'))}>Power Off</button>
+                                    <button className='display-power-button-inactive' onClick={()=> this.handleDisplayPower(this.props.index,this.props.display.setPower('Power On'))}>Power On</button>
+                                    <button className='display-power-button-active-off' onClick={()=> this.handleDisplayPower(this.props.index,this.props.display.setPower('Power Off'))}>Power Off</button>
                                 </React.Fragment>
                             :
                                 <React.Fragment>
-                                    <button className='display-power-button-inactive' onClick={()=> this.props.sendDisplayCommand(this.props.index,this.props.display.setPower('Power On'))}>Power On</button>
-                                    <button className='display-power-button-inactive' onClick={()=> this.props.sendDisplayCommand(this.props.index,this.props.display.setPower('Power Off'))}>Power Off</button>
+                                    <button className='display-power-button-inactive' onClick={()=> this.handleDisplayPower(this.props.index,this.props.display.setPower('Power On'))}>Power On</button>
+                                    <button className='display-power-button-inactive' onClick={()=> this.handleDisplayPower(this.props.index,this.props.display.setPower('Power Off'))}>Power Off</button>
                                 </React.Fragment>
                             }
                         </React.Fragment>
@@ -52,6 +57,7 @@ class Displays extends React.Component {
                             displayStatus={this.props.displayStatus[index]}
                             // methods
                             sendDisplayCommand={this.props.sendDisplayCommand}
+                            setHeaderTimeout={this.props.setHeaderTimeout}
                         />
                     ))}
                 </div>

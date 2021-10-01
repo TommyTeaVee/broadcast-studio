@@ -2,12 +2,16 @@ import React from 'react'
 
 import '../../../style/components/shared/header.scss'
 
+var headerTimeout
+
 class HeaderButton extends React.Component {
     toggleModal = (label) => {
         if(this.props.modal === label) {
             this.props.setMainState('modal',null)
+            this.props.setHeaderTimeout('clear')
         } else {
             this.props.setMainState('modal',label)
+            this.props.setHeaderTimeout('set')
         }
     }
     render() {
@@ -39,6 +43,7 @@ class Header extends React.Component {
                         modal={this.props.modal}
                         // methods
                         setMainState={this.props.setMainState}
+                        setHeaderTimeout={this.props.setHeaderTimeout}
                     />
                     <HeaderButton
                         // states
@@ -46,6 +51,7 @@ class Header extends React.Component {
                         modal={this.props.modal}
                         // methods
                         setMainState={this.props.setMainState}
+                        setHeaderTimeout={this.props.setHeaderTimeout}
                     />
                     <HeaderButton
                         // states
@@ -53,6 +59,7 @@ class Header extends React.Component {
                         modal={this.props.modal}
                         // methods
                         setMainState={this.props.setMainState}
+                        setHeaderTimeout={this.props.setHeaderTimeout}
                     />
                 </div>
             </div>
