@@ -27,6 +27,7 @@ class PreviewWindow extends React.Component {
         var url = `ws://${this.props.tricasterAddress}/v1/video_notifications?name=output1&xres=640&yres=480&q=100`
         ws = new WebSocket(url)
         ws.onmessage = (message) => {
+            console.log('message = ',message.data)
             new Response(message.data)
                 .arrayBuffer()
                 .then(buffer => {
