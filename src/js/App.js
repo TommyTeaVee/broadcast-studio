@@ -1,6 +1,8 @@
 import React from 'react'
+
 import Main from './views/Main'
 import Booting from './views/Booting'
+import Settings from './views/Settings'
 
 import ExtronSwHd4kPlusSeries from '../../control/ExtronSwHdPlusSeries'
 import LgBasicControl from '../../control/LgBasicControl'
@@ -12,7 +14,6 @@ const net = require('net')
 const dgram = require('dgram')
 
 import '../style/App.scss'
-import { toLinuxArchString } from 'builder-util'
 
 /* SWITCHER CONTROL **********************************************************************************/
 var switcher = new ExtronSwHd4kPlusSeries(2)
@@ -54,6 +55,7 @@ class App extends React.Component {
             activeAlert: false,
             alerts: []
         },
+        view: 'booting',
         switcherStatus: {},
         switcherClientStatus: '',
         displayStatus: [{},{},{},{}],
@@ -239,38 +241,48 @@ class App extends React.Component {
         setTimeout(()=> {
             if(this.state.switcherClientStatus === 'Connected' && displaysConnectedCount === 4 && this.state.tricasterCommStatus === 'Connected') {
                 this.setState({systemBooting: false})
+                this.setState({view: 'main'})
             }
         },7500)
     }
+    returnView = view => {
+        switch(view) {
+            case 'booting': return (
+                <Booting
+                    // states
+                    switcherClientStatus={this.state.switcherClientStatus}
+                    switcherAddress={switcherAddress}
+                    displayClientStatus={this.state.displayClientStatus}
+                    displayAddresses={displayAddresses}
+                    tricasterCommStatus={this.state.tricasterCommStatus}
+                    tricasterAddress={tricasterAddress}
+                />
+            )
+            case 'main': return (
+                <Main
+                    // states
+                    system={this.state.system}
+                    switcher={switcher}
+                    switcherStatus={this.state.switcherStatus}
+                    displays={displays}
+                    displayStatus={this.state.displayStatus}
+                    cameras={cameras}
+                    tricasterAddress={tricasterAddress}
+                    // methods
+                    sendSwitcherCommand={this.sendSwitcherCommand}
+                    sendDisplayCommand={this.sendDisplayCommand}
+                    sendCameraCommand={this.sendCameraCommand}
+                />
+            )
+            case 'settings': return (
+                <Settings/>
+            )
+        }
+    } 
     render() {
         return (
             <div id='app'>
-                {this.state.systemBooting === true ?
-                    <Booting
-                        // states
-                        switcherClientStatus={this.state.switcherClientStatus}
-                        switcherAddress={switcherAddress}
-                        displayClientStatus={this.state.displayClientStatus}
-                        displayAddresses={displayAddresses}
-                        tricasterCommStatus={this.state.tricasterCommStatus}
-                        tricasterAddress={tricasterAddress}
-                    />
-                :
-                    <Main
-                        // states
-                        system={this.state.system}
-                        switcher={switcher}
-                        switcherStatus={this.state.switcherStatus}
-                        displays={displays}
-                        displayStatus={this.state.displayStatus}
-                        cameras={cameras}
-                        tricasterAddress={tricasterAddress}
-                        // methods
-                        sendSwitcherCommand={this.sendSwitcherCommand}
-                        sendDisplayCommand={this.sendDisplayCommand}
-                        sendCameraCommand={this.sendCameraCommand}
-                    />
-                }
+                {this.returnView(this.state.view)}
             </div>
         )
     }
