@@ -18,10 +18,10 @@ class SettingsNavigationButton extends React.Component {
 class SettingsNavigation extends React.Component {
     state = {
         components: [
-            {label: 'Switcher', value: 'switcher'},
+            {label: 'Devices', value: 'devices'},
             {label: 'Displays', value: 'displays'},
             {label: 'Magewell', value: 'magewell'},
-            {label: 'Cameras', value: 'camera'},
+            {label: 'Cameras', value: 'cameras'},
             {label: 'Tricaster', value: 'tricaster'}
         ]
     }

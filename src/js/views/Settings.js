@@ -28,7 +28,10 @@ class Settings extends React.Component {
                         // methods
                         setSettingsState={this.setSettingsState}
                     />
-                    <SettingsComponent/>
+                    <SettingsComponent
+                        // states
+                        settingsComponent={this.state.settingsComponent}
+                    />
                 </div>
                 <SettingsFooter/>
             </div>
