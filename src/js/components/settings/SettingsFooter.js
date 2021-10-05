@@ -4,7 +4,7 @@ class SettingsFooter extends React.Component {
     render() {
         return (
             <div className='footer' id='settings-footer'>
-                Footer
+               
             </div>
         )
     }

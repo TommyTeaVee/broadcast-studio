@@ -1,0 +1,16 @@
+@use 'base';
+
+%settings-navigation-button-inactive {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: base.$color-dark-gray;
+}
+
+%settings-navigation-button-active {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: base.$color-blue;
+    border-bottom: 3px solid base.$color-blue;
+}

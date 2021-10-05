@@ -245,6 +245,11 @@ class App extends React.Component {
             }
         },7500)
     }
+    /* STATES ****************************************************************************************************/
+    setAppState = (key,value) => {
+        this.setState({[key]: value})
+    }
+    /* VIEW ******************************************************************************************************/
     returnView = view => {
         switch(view) {
             case 'booting': return (
@@ -272,6 +277,7 @@ class App extends React.Component {
                     sendSwitcherCommand={this.sendSwitcherCommand}
                     sendDisplayCommand={this.sendDisplayCommand}
                     sendCameraCommand={this.sendCameraCommand}
+                    setAppState={this.setAppState}
                 />
             )
             case 'settings': return (

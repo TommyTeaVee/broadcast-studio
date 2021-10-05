@@ -10,12 +10,26 @@ import '../../style/views/settings.scss'
 const Store = require('electron-store')
 
 class Settings extends React.Component {
+    state = {
+        settingsComponent: 'devices'
+    }
+    setSettingsState = (key,value) => {
+        console.log('set settings state')
+        this.setState({[key]: value})
+    }
     render() {
         return (
             <div id='settings'>
                 <SettingsHeader/>
-                <SettingsNavigation/>
-                <SettingsComponent/>
+                <div id='settings-center'>
+                    <SettingsNavigation
+                        // states
+                        settingsComponent={this.state.settingsComponent}
+                        // methods
+                        setSettingsState={this.setSettingsState}
+                    />
+                    <SettingsComponent/>
+                </div>
                 <SettingsFooter/>
             </div>
         )

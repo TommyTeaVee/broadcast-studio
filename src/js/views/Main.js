@@ -101,6 +101,7 @@ class Main extends React.Component {
                         sendDisplayCommand={this.props.sendDisplayCommand}
                         sendCameraCommand={this.props.sendCameraCommand}
                         setHeaderTimeout={this.setHeaderTimeout}
+                        setAppState={this.props.setAppState}
                     />
                 :    
                     <React.Fragment/>

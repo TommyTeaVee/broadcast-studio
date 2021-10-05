@@ -7,13 +7,13 @@ class SystemSetting extends React.Component {
         return (
             <React.Fragment>
                 {this.props.setting.value === this.props.systemSetting ?
-                    <div className='system-setting-active'>
+                    <button className='system-setting-active'>
                         <h4>{this.props.setting.label}</h4>
-                    </div>
+                    </button>
                 :
-                    <div className='system-setting-inactive'>
+                    <button className='system-setting-inactive'>
                         <h4>{this.props.setting.label}</h4>
-                    </div>
+                    </button>
                 }
             </React.Fragment>
         )
@@ -48,8 +48,11 @@ class System extends React.Component {
                         <React.Fragment/>
                     }
                 </div>
-
-                <div id='system-exit'><h3>Exit</h3></div>
+                
+                <div id='system-footer'>
+                    <button id='system-settings' className='system-footer-control' onClick={()=> this.props.setAppState('view','settings')}><h3>Settings</h3></button>
+                    <button id='system-exit' className='system-footer-control'><h3>System Exit</h3></button>
+                </div>
             </div>
         )
     }

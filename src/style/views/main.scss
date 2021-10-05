@@ -57,7 +57,7 @@
     @extend %standard-button-inactive;
 }
 .macro-button-active {
-    @extend %standard-button-active
+    @extend %standard-button-active;
 }
 .presenter-mode-button-inactive, .presenter-mode-button-active {
     width: 20%;

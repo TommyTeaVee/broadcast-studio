@@ -2,3 +2,19 @@
     width: 100%;
     height: 100%;
 }
+#settings-center {
+    width: 100%;
+    height: 89%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+#settings-navigation {
+    width: 12%;
+    height: 100%;
+}
+#settings-component {
+    width: 88%;
+    height: 100%;
+}

@@ -35,6 +35,7 @@ class Modal extends React.Component {
                     system={this.props.system}
                     // methods
                     setHeaderTimeout={this.props.setHeaderTimeout}
+                    setAppState={this.props.setAppState}
                 />
             )
         }
